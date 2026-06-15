@@ -2,6 +2,9 @@
 
 **HTML + TikTokTTS + Gemini AI + FFmpeg → Tự động sinh video TikTok/Reels dạng dọc (9:16)**
 
+## 🎯 Dùng để làm gì?
+Bạn chỉ cần nhập một chủ đề, pipeline sẽ tự động tạo ra video dọc 9:16 hoàn chỉnh, sẵn sàng đăng TikTok / Reels / Shorts — không cần chỉnh tay. Phù hợp cho các kênh **faceless video** dạng giải thích, facts, lịch sử, quote. Toàn bộ **miễn phí** nhờ Gemini free tier + TikTokTTS. 
+
 Hệ thống pipeline 5 bước, nhận đầu vào là **chủ đề** hoặc **script JSON**, tự động sinh toàn bộ video hoàn chỉnh:
 
 ```
