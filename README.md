@@ -51,9 +51,9 @@ cp .env.example .env
 GEMINI_API_KEYS=AIzaSy...,AIzaSy...
 
 # localTTS local server
-localTTS_HOST=http://localhost:8080
-localTTS_VOICE=cutefemale
-localTTS_SPEED=10
+TIKTOKTTS_HOST=http://localhost:8080
+TIKTOKTTS_VOICE=cutefemale
+TIKTOKTTS_SPEED=10
 
 # Dọn temp/ sau khi merge
 CLEANUP_TEMP=true
