@@ -1,15 +1,15 @@
 # 🎬 Video Pipeline
 
-**HTML + TikTokTTS + Gemini AI + FFmpeg → Tự động sinh video TikTok/Reels dạng dọc (9:16)**
+**HTML + localTTS + Gemini AI + FFmpeg → Tự động sinh video TikTok/Reels dạng dọc (9:16)**
 
 ## 🎯 Dùng để làm gì?
-Bạn chỉ cần nhập một chủ đề, pipeline sẽ tự động tạo ra video dọc 9:16 hoàn chỉnh, sẵn sàng đăng TikTok / Reels / Shorts — không cần chỉnh tay. Phù hợp cho các kênh **faceless video** dạng giải thích, facts, lịch sử, quote. Toàn bộ **miễn phí** nhờ Gemini free tier + TikTokTTS. 
+Bạn chỉ cần nhập một chủ đề, pipeline sẽ tự động tạo ra video dọc 9:16 hoàn chỉnh, sẵn sàng đăng TikTok / Reels / Shorts — không cần chỉnh tay. Phù hợp cho các kênh **faceless video** dạng giải thích, facts, lịch sử, quote. Toàn bộ **miễn phí** nhờ Gemini free tier + localTTS. 
 
 Hệ thống pipeline 5 bước, nhận đầu vào là **chủ đề** hoặc **script JSON**, tự động sinh toàn bộ video hoàn chỉnh:
 
 ```
 [Chủ đề] → B1: Sinh kịch bản (Gemini AI) — hỗ trợ batch cho số cảnh lớn
-         → B2: Text → Audio (TikTokTTS local server)
+         → B2: Text → Audio (localTTS local server)
          → B3: JSON → HTML động (Gemini AI)
          → B4: HTML → Video clip (Playwright + FFmpeg x11grab)
          → B5: Ghép clip → Video cuối (FFmpeg concat)
@@ -30,10 +30,10 @@ pip install -r requirements.txt
 playwright install chromium
 ```
 
-### TikTokTTS local server
-Pipeline dùng TikTokTTS local server để sinh audio. Cần chạy server riêng:
+### localTTS local server
+Pipeline dùng localTTS local server để sinh audio. Cần chạy server riêng:
 ```bash
-# Ví dụ: TikTokTTS server tại http://localhost:8080
+# Ví dụ: localTTS server tại http://localhost:8080
 # Kiểm tra server hoạt động:
 curl http://localhost:8080/health
 ```
@@ -53,10 +53,10 @@ cp .env.example .env
 # Gemini API Keys (comma-separated, xoay vòng tự động)
 GEMINI_API_KEYS=AIzaSy...,AIzaSy...
 
-# TikTokTTS local server
-TIKTOKTTS_HOST=http://localhost:8080
-TIKTOKTTS_VOICE=cutefemale
-TIKTOKTTS_SPEED=10
+# localTTS local server
+localTTS_HOST=http://localhost:8080
+localTTS_VOICE=cutefemale
+localTTS_SPEED=10
 
 # Dọn temp/ sau khi merge
 CLEANUP_TEMP=true
@@ -121,7 +121,7 @@ video-pipeline/
 │   ├── __init__.py
 │   ├── gemini_pool.py            # RotationPool — xoay key/model theo RPM/RPD
 │   ├── script_generator.py       # B1: Sinh kịch bản JSON (hỗ trợ batch)
-│   ├── tts.py                    # B2: Text → Audio (TikTokTTS async)
+│   ├── tts.py                    # B2: Text → Audio (localTTS async)
 │   ├── scene_generator.py        # B3: JSON → HTML động (Gemini)
 │   ├── renderer.py               # B4: HTML → Video clip (Playwright + FFmpeg)
 │   └── merger.py                 # B5: Ghép clip → output video
@@ -159,7 +159,7 @@ video-pipeline/
 - Output: `input/script.json`
 
 ### Bước 2: Text → Audio (`tts.py`)
-- Gọi TikTokTTS local server cho từng dialogue (async, song song)
+- Gọi localTTS local server cho từng dialogue (async, song song)
 - Kiểm soát concurrent bằng semaphore (`MAX_CONCURRENT_TTS=2`)
 - Ghép audio: dialogue_1 + silence + dialogue_2 + silence + ... (không silence cuối)
 - Đo duration bằng mutagen
@@ -205,11 +205,11 @@ GEMINI_MODELS = [
 - Pool là **singleton global** — tracking chính xác qua các module
 - **Model fallback:** nếu gemma-4 lỗi → tự động chuyển gemini-flash-lite
 
-### TikTokTTS
+### localTTS
 ```python
-TIKTOKTTS_HOST  = "http://localhost:8080"
-TIKTOKTTS_VOICE = "cutefemale"
-TIKTOKTTS_SPEED = 10
+localTTS_HOST  = "http://localhost:8080"
+localTTS_VOICE = "cutefemale"
+localTTS_SPEED = 10
 MAX_CONCURRENT_TTS = 2   # request song song
 MAX_RETRIES       = 5
 ```
@@ -237,7 +237,7 @@ python -c "from pipeline.renderer import render_scene; import json; s=json.load(
 ## ⚠️ Lưu ý quan trọng
 
 1. **Xvfb phải chạy trước renderer** — pipeline tự động kiểm tra/kích hoạt
-2. **TikTokTTS server phải chạy riêng** — pipeline không start server
+2. **localTTS server phải chạy riêng** — pipeline không start server
 3. **Duration phải được tính trước khi gen HTML** — `scene["duration"]` + `dialogue_durations`
 4. **DISPLAY=:99** phải được set trước khi Playwright và FFmpeg x11grab chạy
 5. **Playwright launch headless=false** trên X11 (không dùng `headless=True`)
