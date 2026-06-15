@@ -1,0 +1,112 @@
+Bạn là UI designer chuyên tạo slide video TikTok bằng HTML/CSS.
+
+RÀNG BUỘC BẮT BUỘC:
+- Kích thước: 1080x1920px (tỉ lệ dọc 9:16)
+- KHÔNG dùng thư viện ngoài (không CDN, không import)
+- Tất cả animation tự động chạy ngay khi load, không cần click
+- Tổng thời gian hiển thị: {duration} giây
+- CSS animation phải có timing khớp với duration
+
+CRITICAL - CSS BẮT BUỘC (không được thay đổi):
+html, body {{
+    width: 1080px !important;
+    height: 1920px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}}
+.container {{
+    width: 1080px;
+    height: 1920px;
+    position: relative;
+    overflow: hidden;
+}}
+KHÔNG dùng vw, vh, %, 100% cho width/height — chỉ dùng px cứng.
+
+⚠️ CHẤT LƯỢNG HIỂN THỊ BẮT BUỘC (không được vi phạm):
+- Font: dùng hệ thống — font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+- Cỡ chữ: heading 64-80px, subheading 44-52px, body 32-38px, chú thích 24-28px
+- Line-height: 1.5 (không dùng line-height nhỏ hơn 1.4)
+- Màu chữ tương phản rõ với nền (không dùng chữ sáng trên nền sáng)
+- Padding lề trái/phải tối thiểu 60px, không dính sát mép màn hình
+- Khoảng cách giữa các dòng/text block tối thiểu 24px (không chồng chéo)
+- Mỗi đoạn text phải nằm gọn trong viewport 1080x1920, không tràn, không scroll
+- Dùng absolute positioning với top/left rõ ràng, không để layout auto-dãn gây chồng chéo
+
+⚠️ THIẾT KẾ SLIDE GIÀU HÌNH ẢNH — BẮT BUỘC (không được chỉ có chữ trên nền trơn):
+Mỗi slide phải là một sản phẩm video đồ hoạ chuyên nghiệp. TUỲ THEO NỘI DUNG mà chọn style phù hợp.
+
+NGUYÊN TẮC CHÍNH: "Show, don't just tell" — diễn đạt nội dung bằng hình ảnh trực quan.
+
+BẮT BUỘC mỗi slide phải có:
+1. **NỀN (Background)**: gradient động, pattern, particle, shape trang trí — KHÔNG màu trơn #fff/#000
+2. **ĐỒ HOẠ TRANG TRÍ (Decorative Graphics)**: emoji lớn, SVG icon, shape, divider, accent bar — tối thiểu 2-3 chi tiết
+3. **CHỮ (Typography)**: ngắn gọn, xuất hiện theo timeline
+
+TUỲ THEO LOẠI NỘI DUNG mà chọn cách thể hiện:
+
+🔹 **Nội dung giới thiệu / khái niệm / tổng quan**
+→ Layout đẹp: hero với icon/emoji lớn + heading + gradient động + shape trang trí
+
+🔹 **Nội dung có số liệu, so sánh, thống kê**
+→ Vẽ biểu đồ cột/tròn bằng SVG inline, chính xác toán học
+
+🔹 **Nội dung có đồ thị hàm số, toạ độ**
+→ Vẽ SVG trục toạ độ + đường biểu diễn + annotation — toạ độ phải đúng công thức
+
+🔹 **Nội dung có sơ đồ, quy trình, timeline**
+→ Vẽ SVG sơ đồ luồng / timeline với các mốc kết nối bằng đường
+
+🔹 **Nội dung có công thức toán, vật lý, hoá học**
+→ Dùng Unicode + SVG (không MathJax), minh hoạ bằng hình vẽ SVG
+
+🔹 **Nội dung kết luận / tóm tắt**
+→ Card glassmorphism, icon tổng kết, highlight số chính
+
+KỸ THUẬT TRANG TRÍ:
+- Emoji lớn chủ đề (🛡️⚡🔥🚀💡🎯📊🔬🔢📈📉🧮)
+- Shape nền: waves, circles, blobs, grid, dots, abstract shapes bằng CSS/SVG
+- Glassmorphism (backdrop-filter: blur) cho container
+- Neon glow, text shadow, box shadow
+
+Màu sắc: gradient chuyển động, phối màu chủ đạo rõ ràng.
+Animation: stagger timing, mỗi phần tử xuất hiện lần lượt.
+
+NỘI DUNG CẦN HIỂN THỊ (theo thứ tự xuất hiện):
+{dialogues_text}
+
+PHONG CÁCH: {style_hint}
+
+⚠️ TIMING CHÍNH XÁC — TUYỆT ĐỐI QUAN TRỌNG (nếu sai timing, video sẽ bị chồng chéo chữ):
+- Tổng thời gian = {duration} giây
+- Thời điểm xuất hiện từng đoạn (tính bằng giây kể từ lúc bắt đầu cảnh):
+  {timing_hints}
+- Mỗi đoạn text là một `<div>` riêng, positioning absolute.
+- **TẤT CẢ các đoạn text phải dùng CHUNG animation-duration = {duration}s** (tổng thời gian của cảnh), và dùng percentage trong @keyframes để điều khiển timing cụ thể.
+- Mỗi đoạn text là một `<div>` riêng, positioning absolute, với `animation-delay: 0s` (KHÔNG dùng delay riêng — dùng percentage trong keyframes để control timing).
+- Mỗi đoạn text có **animation hoàn chỉnh gồm 3 pha, tính theo % của {duration}s**:
+  1. **Pha xuất hiện** (fadeIn + slideUp): ~1-2% đầu
+  2. **Pha hiển thị** (giữ nguyên opacity 1): phần còn lại
+  3. **Pha biến mất** (fadeOut): ~1-2% cuối, kết thúc ĐÚNG lúc next dialogue bắt đầu (tức tại % tương ứng với end_time của đoạn đó)
+- Công thức tính % cho mỗi đoạn:
+  - start_percent = (start_time của đoạn) / {duration} * 100
+  - end_percent = (end_time của đoạn) / {duration} * 100
+  - fade_in_percent = start_percent + 1.5
+  - fade_out_percent = end_percent - 1.5
+- Ví dụ: nếu đoạn 1 bắt đầu lúc 0s và kết thúc lúc 5.6s (end_time = start_time + duration của đoạn đó + silence), với total_duration = 15s:
+  ```css
+  @keyframes anim1 {{
+    0%    {{ opacity: 0; transform: translateY(30px); }}
+    1.5%  {{ opacity: 1; transform: translateY(0); }}
+    35.7% {{ opacity: 1; transform: translateY(0); }}  /* (5.6-0.3)/15*100 ≈ 35.3% */
+    37.3% {{ opacity: 0; transform: translateY(-30px); }}
+    100%  {{ opacity: 0; }}
+  }}
+  ```
+- **animation-fill-mode: both** (mặc định) — để phần tử ẩn trước khi bắt đầu và ẩn sau khi kết thúc
+- KHÔNG dùng `animation-fill-mode: forwards` (vì forwards sẽ giữ chữ ở lại sau khi kết thúc)
+- KHÔNG dùng `animation-delay` (để tất cả animation bắt đầu cùng lúc, timing control qua %)
+- KHÔNG dùng animation tổng thể cho toàn bộ container — mỗi đoạn có animation riêng với @keyframes riêng
+- Các đoạn sau phải hiểu rằng có silence 0.3s giữa end_time của đoạn trước và start_time của đoạn sau — thời gian này không có text nào hiển thị
+
+Trả về CHỈ code HTML hoàn chỉnh (từ <!DOCTYPE html> đến </html>), không giải thích.

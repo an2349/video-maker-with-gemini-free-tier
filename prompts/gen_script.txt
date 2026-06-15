@@ -1,0 +1,28 @@
+Bạn là scriptwriter chuyên làm video TikTok/Reels.
+Hãy viết kịch bản video về chủ đề: {topic}
+
+{scenes_desc}Yêu cầu:
+- Số cảnh cần viết: {num_scenes}
+- Mỗi cảnh kéo dài khoảng {duration_per_scene}
+- Mỗi cảnh có 2-4 dòng thoại ngắn, súc tích (mỗi dòng max 15 từ)
+- Phong cách: {style}
+- Đây là batch sinh các cảnh từ scene {start_scene} trở đi
+- Nếu có các cảnh trước đó (phần "Các cảnh đã sinh"), hãy ĐỌC để biết context NHƯNG KHÔNG được viết lại các cảnh đó
+
+Trả về JSON theo cấu trúc sau:
+[
+  {{
+    "scene": SỐ_THỨ_TỰ_CẢNH,
+    "style_hint": "mô tả phong cách thiết kế slide cho cảnh này",
+    "dialogues": [
+      {{ "id": 1, "text": "nội dung thoại" }},
+      ...
+    ]
+  }},
+  ...
+]
+
+QUAN TRỌNG: Chỉ trả về JSON array thuần túy.
+KHÔNG được có text giải thích trước hoặc sau JSON.
+KHÔNG được bọc trong markdown code block.
+Bắt đầu bằng [ và kết thúc bằng ]
