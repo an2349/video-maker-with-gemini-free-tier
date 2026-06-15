@@ -34,9 +34,6 @@ playwright install chromium
 Pipeline dùng localTTS local server để sinh audio. Cần chạy server riêng:
 ```bash
 # Ví dụ: localTTS server tại http://localhost:8080
-# Kiểm tra server hoạt động:
-curl http://localhost:8080/health
-```
 
 ---
 
