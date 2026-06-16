@@ -84,11 +84,24 @@ MÀU SẮC — theo style_hint "{style_hint}", với nguyên tắc:
   • Gradient được dùng thoải mái — gradient text, gradient border, gradient background
   • Các card/ô có thể dùng màu nền khác nhau trong cùng palette
 
-YẾU TỐ ĐỒ HỌA KHOA HỌ — bắt buộc có ít nhất 2:
-  • Ký hiệu toán/vật lý: Ψ ħ ∞ ∆ λ π Σ ∫ √ ⟨⟩ ⊗ ↑↓
+YẾU TỐ ĐỒ HỌA KHOA HỌC — bắt buộc có ít nhất 2:
+  • Ký hiệu toán/vật lý Unicode trực tiếp: Ψ ħ ∞ ∆ λ π Σ ∫ √ ⟨⟩ ⊗ ↑↓ → ⇒ ≈ ±
   • SVG shapes: vòng tròn đồng tâm, đường xoắn ốc, hình sin, orbital paths
   • Decorative lines: horizontal rule có gradient, vertical accent bar, corner brackets
   • Emoji khoa học (nếu phù hợp): ⚛️ 🔬 💡 🌊 ✨ 🔭
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ CẤM TUYỆT ĐỐI — LATEX TRONG CÔNG THỨC
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+KHÔNG BAO GIỜ bọc ký hiệu toán học trong $...$, \(...\) hay \[...\].
+HTML không render LaTeX — chúng sẽ hiện nguyên dạng text thô như "$\Psi$", "$\frac[a][b]$" (dùng dấu ngoặc vuông để minh họa — thực tế là text thô xấu xí) trên màn hình.
+
+Thay vào đó, dùng ký tự Unicode trực tiếp hoặc HTML tag:
+  Ψ ψ  ħ  ∞  ∆ δ  λ  π  Σ  ∫  √  ±  ×  ≈  ↑ ↓ → ←  ↔ ⇒ ⇔  ⊗  ⟨⟩
+  Số mũ   → <sup>2</sup> hoặc ² ³ ⁴
+  Chỉ số  → <sub>0</sub> hoặc ₀ ₁ ₂
+  Phân số → <sup>a</sup>/<sub>b</sub> hoặc vẽ SVG
+  Phức tạp hơn → vẽ SVG inline, KHÔNG dùng LaTeX.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 YÊU CẦU KỸ THUẬT
