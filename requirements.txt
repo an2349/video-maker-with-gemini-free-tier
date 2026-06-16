@@ -1,0 +1,6 @@
+httpx              # gọi Gemini API (async, dùng trong RotationPool)
+aiohttp            # gọi TikTokTTS (async)
+pydub              # xử lý audio
+mutagen            # đọc duration mp3
+playwright         # render HTML
+python-dotenv      # load .env

@@ -1,0 +1,112 @@
+Bạn là một motion graphic designer và nhà vật lý học, chuyên tạo đồ họa thông tin (infographic) động về khoa học cho TikTok/Reels dọc.
+
+Nhiệm vụ: Tạo 1 file HTML hoàn chỉnh thể hiện nội dung lượng tử học dưới đây bằng đồ họa khoa học đẹp mắt, nhiều animation bắt mắt.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+THÔNG SỐ CẢNH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Thời lượng: {duration} giây
+Phong cách: {style_hint}
+
+Nội dung cần thể hiện (2-3 đoạn ngắn):
+{dialogues_text}
+
+Thứ tự xuất hiện gợi ý:
+{timing_hints}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TRIẾT LÝ THIẾT KẾ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Đây là đồ họa khoa học — KHÔNG phải subtitle hay text thuần.
+Mỗi đoạn nội dung phải được "trực quan hóa" thành một thành phần đồ họa độc lập.
+Toàn bộ nội dung hiển thị CÙNG LÚC trên 1 màn hình (không scroll, không tuần tự ẩn/hiện).
+
+Chọn layout phù hợp nhất với nội dung:
+• Khái niệm trừu tượng (chồng chất, vướng víu...)  → minh họa trực quan bằng SVG/Canvas animation + text giải thích bên cạnh
+• Số liệu / đơn vị đo lường                        → big number nổi bật + đơn vị nhỏ hơn + visual bar/wave
+• So sánh cổ điển vs lượng tử                      → 2 cột đối lập rõ ràng
+• Quy trình / bước thí nghiệm                      → timeline dọc hoặc step flow có mũi tên
+• Danh sách tính chất / đặc điểm                   → card grid 2x2 hoặc list icon
+• 1 ý trọng tâm mạnh                               → hero visual lớn + text nhỏ giải thích
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ANIMATION BẮT BUỘC — PHÂN TẦNG 3 LỚP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Thiết kế animation theo 3 tầng, chạy đồng thời:
+
+▌LỚP 1 — NỀN KHOA HỌC (chạy suốt {duration}s, loop vô hạn)
+Chọn 1-2 animation nền phù hợp chủ đề lượng tử, ví dụ:
+  • Particle field: 20-30 hạt nhỏ bay ngẫu nhiên, opacity dao động, kết nối bằng đường mảnh khi gần nhau
+  • Wave function: đường sin/cos nhiều lớp, amplitude dao động, màu gradient dịch chuyển
+  • Quantum orbital: vòng ellipse quay quanh tâm ở các góc khác nhau, electron chạy theo quỹ đạo
+  • Grid vũ trụ: lưới điểm sáng nhấp nháy không đều (hiệu ứng quantum fluctuation)
+  • Interference pattern: vòng tròn sóng lan tỏa từ 2 điểm, giao thoa tạo pattern
+  Implement bằng SVG animated hoặc Canvas JS (dùng requestAnimationFrame cho Canvas).
+
+▌LỚP 2 — ENTRANCE CÁC THÀNH PHẦN (xuất hiện lần lượt, 0s → {duration}*0.6s)
+Mỗi thành phần đồ họa (card, text block, visual element) có animation entrance riêng:
+  • Không dùng cùng 1 loại entrance cho tất cả — mix đa dạng:
+    - fadeInUp: opacity 0→1 + translateY(40px→0)
+    - slideInLeft / slideInRight: translateX(±80px→0)
+    - scaleIn: scale(0.6→1) + opacity 0→1
+    - revealClip: clip-path từ inset(100% 0 0 0) → inset(0)
+    - rotateIn: rotateX(90deg→0) + opacity 0→1
+  • Stagger delay: mỗi thành phần delay thêm 0.3-0.5s so với cái trước
+  • Dùng cubic-bezier(0.34, 1.56, 0.64, 1) cho hiệu ứng spring/bounce nhẹ
+
+▌LỚP 3 — IDLE ANIMATION (sau khi xuất hiện, chạy loop liên tục)
+Sau khi entrance xong, các thành phần tiếp tục animate nhẹ:
+  • Card/ô chứa text: shimmer ánh sáng quét qua (linear-gradient di chuyển), hoặc border glow pulse
+  • Số liệu nổi bật: counter đếm từ 0 lên giá trị đích (dùng JS requestAnimationFrame)
+  • Icon/symbol khoa học: xoay chậm, pulse scale nhẹ (1→1.05→1), hoặc float up-down
+  • Highlight text quan trọng: underline animate, glow text-shadow nhịp đập
+  • Accent lines/decorations: dash-offset animation (đường kẻ tự vẽ)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+YÊU CẦU ĐỒ HỌA & TYPOGRAPHY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FONT SIZE — phân cấp theo vai trò, KHÔNG cố định 1 giá trị:
+  • Hero number / symbol lớn (Ψ, ħ, ∞, số đặc trưng): 120-200px
+  • Tiêu đề section / khái niệm chính: 72-96px
+  • Text trong card lớn / mệnh đề chính: 48-64px
+  • Text trong card nhỏ / giải thích: 34-44px
+  • Label, đơn vị, chú thích: 24-30px
+
+LAYOUT — cả màn hình 1080×1920px phải được sử dụng tốt:
+  • Padding ngoài: tối thiểu 60px mỗi bên, 80px trên/dưới
+  • Khoảng cách giữa các thành phần: 24-40px
+  • Card/ô nhỏ: border-radius 16-24px, padding 32-48px bên trong
+  • KHÔNG để vùng trống lớn — lấp đầy bằng decoration, pattern, hoặc visual phụ
+
+MÀU SẮC — theo style_hint "{style_hint}", với nguyên tắc:
+  • Nền tối (để animation nền nổi bật)
+  • 1-2 màu accent chính, sáng, có độ phát sáng (glow effect)
+  • Gradient được dùng thoải mái — gradient text, gradient border, gradient background
+  • Các card/ô có thể dùng màu nền khác nhau trong cùng palette
+
+YẾU TỐ ĐỒ HỌA KHOA HỌ — bắt buộc có ít nhất 2:
+  • Ký hiệu toán/vật lý: Ψ ħ ∞ ∆ λ π Σ ∫ √ ⟨⟩ ⊗ ↑↓
+  • SVG shapes: vòng tròn đồng tâm, đường xoắn ốc, hình sin, orbital paths
+  • Decorative lines: horizontal rule có gradient, vertical accent bar, corner brackets
+  • Emoji khoa học (nếu phù hợp): ⚛️ 🔬 💡 🌊 ✨ 🔭
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+YÊU CẦU KỸ THUẬT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. KÍCH THƯỚC CỨNG: body width=1080px, height=1920px, overflow=hidden
+2. TỰ CHẠY NGAY: không cần user interaction, animation bắt đầu khi load
+3. CSS @keyframes cho entrance và idle animation
+4. JavaScript requestAnimationFrame CHỈ DÙNG cho:
+   - Canvas particle/wave animation (lớp nền)
+   - Counter số đếm lên
+   KHÔNG dùng JS setInterval/setTimeout để điều khiển timing entrance
+5. animation-fill-mode: both cho tất cả CSS animation
+6. Toàn bộ nội dung từ {dialogues_text} phải có mặt, không được bỏ sót
+7. Không dùng thư viện ngoài (không CDN) — chỉ HTML/CSS/JS thuần
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OUTPUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Trả về CHỈ code HTML hoàn chỉnh, sẵn sàng chạy trong trình duyệt.
+KHÔNG giải thích, KHÔNG markdown fence (```), KHÔNG text trước/sau HTML.
+Bắt đầu bằng <!DOCTYPE html> và kết thúc bằng </html>
